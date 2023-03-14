@@ -1,0 +1,4 @@
+_course-resources/
+/.vscode/
+dist/
+node_modules/
