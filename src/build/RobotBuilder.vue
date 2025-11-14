@@ -57,83 +57,101 @@
 </template>
 
 <script>
+import { computed } from 'vue';
 import parts from '../data/parts';
 import { toCurrency } from '../shared/formatters';
-import createdHook from './created-hook-mixin';
-
-function getNextValidIndex(index, length) {
-  const incrementedIndex = index + 1;
-  return incrementedIndex > length - 1 ? 0 : incrementedIndex;
-}
-
-function getPreviousValidIndex(index, length) {
-  const decrementedIndex = index - 1;
-  return decrementedIndex < 0 ? length - 1 : decrementedIndex;
-}
 
 export default {
   name: 'RobotBuilder',
-  mixins: [createdHook],
-  data() {
-    return {
-      availableParts: parts,
-      selectedHeadIndex: 0,
-      selectedLeftArmIndex: 0,
-      selectedTorsoIndex: 0,
-      selectedRightArmIndex: 0,
-      selectedBaseIndex: 0,
-      cart: [],
-    };
-  },
-  computed: {
-    selectedRobot() {
-      return {
-        head: this.availableParts.heads[this.selectedHeadIndex],
-        leftArm: this.availableParts.arms[this.selectedLeftArmIndex],
-        torso: this.availableParts.torsos[this.selectedTorsoIndex],
-        rightArm: this.availableParts.arms[this.selectedRightArmIndex],
-        base: this.availableParts.bases[this.selectedBaseIndex],
-      };
-    },
-  },
-  methods: {
-    addToCart() {
-      const robot = this.selectedRobot;
+  setup() {
+    function getNextValidIndex(index, length) {
+      const incrementedIndex = index + 1;
+      return incrementedIndex > length - 1 ? 0 : incrementedIndex;
+    }
+
+    function getPreviousValidIndex(index, length) {
+      const decrementedIndex = index - 1;
+      return decrementedIndex < 0 ? length - 1 : decrementedIndex;
+    }
+
+    const availableParts = parts;
+    let selectedHeadIndex = 0;
+    let selectedLeftArmIndex = 0;
+    let selectedTorsoIndex = 0;
+    let selectedRightArmIndex = 0;
+    let selectedBaseIndex = 0;
+    const cart = [];
+
+    const selectedRobot = computed(() => ({
+      head: availableParts.heads[selectedHeadIndex],
+      leftArm: availableParts.arms[selectedLeftArmIndex],
+      torso: availableParts.torsos[selectedTorsoIndex],
+      rightArm: availableParts.arms[selectedRightArmIndex],
+      base: availableParts.bases[selectedBaseIndex],
+    }));
+
+    const addToCart = () => {
+      const robot = selectedRobot;
       const cost = robot.head.cost + robot.leftArm.cost + robot.torso.cost + robot.rightArm.cost + robot.base.cost;
-      this.cart.push({ ...robot, cost });
-      console.log(this.cart.length);
-    },
-    toCurrency,
-    selectNextHead() {
-      this.selectedHeadIndex = getNextValidIndex(this.selectedHeadIndex, this.availableParts.heads.length);
-    },
-    selectPrviouseHead() {
-      this.selectedHeadIndex = getPreviousValidIndex(this.selectedHeadIndex, this.availableParts.heads.length);
-    },
-    selectNextLeftArm() {
-      this.selectedLeftArmIndex = getNextValidIndex(this.selectedLeftArmIndex, this.availableParts.arms.length);
-    },
-    selectPrviouseLeftArm() {
-      this.selectedLeftArmIndex = getPreviousValidIndex(this.selectedLeftArmIndex, this.availableParts.arms.length);
-    },
-    selectNextTorso() {
-      this.selectedTorsoIndex = getNextValidIndex(this.selectedTorsoIndex, this.availableParts.torsos.length);
-    },
-    selectPrviouseTorso() {
-      this.selectedTorsoIndex = getPreviousValidIndex(this.selectedTorsoIndex, this.availableParts.torsos.length);
-    },
-    selectNextRightArm() {
-      this.selectedRightArmIndex = getNextValidIndex(this.selectedRightArmIndex, this.availableParts.arms.length);
-    },
-    selectPrviouseRightArm() {
-      this.selectedRightArmIndex = getPreviousValidIndex(this.selectedRightArmIndex, this.availableParts.arms.length);
-    },
-    selectNextBase() {
-      this.selectedBaseIndex = getNextValidIndex(this.selectedBaseIndex, this.availableParts.bases.length);
-    },
-    selectPrviouseBase() {
-      this.selectedBaseIndex = getPreviousValidIndex(this.selectedBaseIndex, this.availableParts.bases.length);
-    },
+      cart.push({ ...robot, cost });
+      console.log(cart.length);
+    };
+
+    // #region Part Selector Methods
+    const selectNextHead = () => {
+      selectedHeadIndex = getNextValidIndex(selectedHeadIndex, availableParts.heads.length);
+    };
+    const selectPrviouseHead = () => {
+      selectedHeadIndex = getPreviousValidIndex(selectedHeadIndex, availableParts.heads.length);
+    };
+    const selectNextLeftArm = () => {
+      selectedLeftArmIndex = getNextValidIndex(selectedLeftArmIndex, availableParts.arms.length);
+    };
+    const selectPrviouseLeftArm = () => {
+      selectedLeftArmIndex = getPreviousValidIndex(selectedLeftArmIndex, availableParts.arms.length);
+    };
+    const selectNextTorso = () => {
+      selectedTorsoIndex = getNextValidIndex(selectedTorsoIndex, availableParts.torsos.length);
+    };
+    const selectPrviouseTorso = () => {
+      selectedTorsoIndex = getPreviousValidIndex(selectedTorsoIndex, availableParts.torsos.length);
+    };
+    const selectNextRightArm = () => {
+      selectedRightArmIndex = getNextValidIndex(selectedRightArmIndex, availableParts.arms.length);
+    };
+    const selectPrviouseRightArm = () => {
+      selectedRightArmIndex = getPreviousValidIndex(selectedRightArmIndex, availableParts.arms.length);
+    };
+    const selectNextBase = () => {
+      selectedBaseIndex = getNextValidIndex(selectedBaseIndex, availableParts.bases.length);
+    };
+    const selectPrviouseBase = () => {
+      selectedBaseIndex = getPreviousValidIndex(selectedBaseIndex, availableParts.bases.length);
+    };
+    // #endregion
+
+    return {
+      availableParts,
+      selectedHeadIndex,
+      selectedLeftArmIndex,
+      selectedTorsoIndex,
+      selectedRightArmIndex,
+      selectedBaseIndex,
+      cart,
+      selectedRobot,
+      toCurrency,
+      addToCart,
+      selectNextHead,
+      selectPrviouseHead,
+      selectNextLeftArm,
+      selectPrviouseLeftArm,
+      selectNextTorso,
+      selectPrviouseTorso,
+      selectNextRightArm,
+      selectPrviouseRightArm,
+      selectNextBase,
+      selectPrviouseBase,
+    };
   },
 };
 </script>
