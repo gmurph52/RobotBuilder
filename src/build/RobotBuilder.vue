@@ -56,104 +56,76 @@
   </div>
 </template>
 
-<script>
-import { computed } from 'vue';
+<script setup>
+import { computed, ref } from 'vue';
 import parts from '../data/parts';
 import { toCurrency } from '../shared/formatters';
 
-export default {
-  name: 'RobotBuilder',
-  setup() {
-    function getNextValidIndex(index, length) {
-      const incrementedIndex = index + 1;
-      return incrementedIndex > length - 1 ? 0 : incrementedIndex;
-    }
+function getNextValidIndex(index, length) {
+  const incrementedIndex = index + 1;
+  return incrementedIndex > length - 1 ? 0 : incrementedIndex;
+}
 
-    function getPreviousValidIndex(index, length) {
-      const decrementedIndex = index - 1;
-      return decrementedIndex < 0 ? length - 1 : decrementedIndex;
-    }
+function getPreviousValidIndex(index, length) {
+  const decrementedIndex = index - 1;
+  return decrementedIndex < 0 ? length - 1 : decrementedIndex;
+}
 
-    const availableParts = parts;
-    let selectedHeadIndex = 0;
-    let selectedLeftArmIndex = 0;
-    let selectedTorsoIndex = 0;
-    let selectedRightArmIndex = 0;
-    let selectedBaseIndex = 0;
-    const cart = [];
+const availableParts = parts;
+const selectedHeadIndex = ref(0);
+const selectedLeftArmIndex = ref(0);
+const selectedTorsoIndex = ref(0);
+const selectedRightArmIndex = ref(0);
+const selectedBaseIndex = ref(0);
+const cart = ref([]);
 
-    const selectedRobot = computed(() => ({
-      head: availableParts.heads[selectedHeadIndex],
-      leftArm: availableParts.arms[selectedLeftArmIndex],
-      torso: availableParts.torsos[selectedTorsoIndex],
-      rightArm: availableParts.arms[selectedRightArmIndex],
-      base: availableParts.bases[selectedBaseIndex],
-    }));
+const selectedRobot = computed(() => ({
+  head: availableParts.heads[selectedHeadIndex.value],
+  leftArm: availableParts.arms[selectedLeftArmIndex.value],
+  torso: availableParts.torsos[selectedTorsoIndex.value],
+  rightArm: availableParts.arms[selectedRightArmIndex.value],
+  base: availableParts.bases[selectedBaseIndex.value],
+}));
 
-    const addToCart = () => {
-      const robot = selectedRobot;
-      const cost = robot.head.cost + robot.leftArm.cost + robot.torso.cost + robot.rightArm.cost + robot.base.cost;
-      cart.push({ ...robot, cost });
-      console.log(cart.length);
-    };
-
-    // #region Part Selector Methods
-    const selectNextHead = () => {
-      selectedHeadIndex = getNextValidIndex(selectedHeadIndex, availableParts.heads.length);
-    };
-    const selectPrviouseHead = () => {
-      selectedHeadIndex = getPreviousValidIndex(selectedHeadIndex, availableParts.heads.length);
-    };
-    const selectNextLeftArm = () => {
-      selectedLeftArmIndex = getNextValidIndex(selectedLeftArmIndex, availableParts.arms.length);
-    };
-    const selectPrviouseLeftArm = () => {
-      selectedLeftArmIndex = getPreviousValidIndex(selectedLeftArmIndex, availableParts.arms.length);
-    };
-    const selectNextTorso = () => {
-      selectedTorsoIndex = getNextValidIndex(selectedTorsoIndex, availableParts.torsos.length);
-    };
-    const selectPrviouseTorso = () => {
-      selectedTorsoIndex = getPreviousValidIndex(selectedTorsoIndex, availableParts.torsos.length);
-    };
-    const selectNextRightArm = () => {
-      selectedRightArmIndex = getNextValidIndex(selectedRightArmIndex, availableParts.arms.length);
-    };
-    const selectPrviouseRightArm = () => {
-      selectedRightArmIndex = getPreviousValidIndex(selectedRightArmIndex, availableParts.arms.length);
-    };
-    const selectNextBase = () => {
-      selectedBaseIndex = getNextValidIndex(selectedBaseIndex, availableParts.bases.length);
-    };
-    const selectPrviouseBase = () => {
-      selectedBaseIndex = getPreviousValidIndex(selectedBaseIndex, availableParts.bases.length);
-    };
-    // #endregion
-
-    return {
-      availableParts,
-      selectedHeadIndex,
-      selectedLeftArmIndex,
-      selectedTorsoIndex,
-      selectedRightArmIndex,
-      selectedBaseIndex,
-      cart,
-      selectedRobot,
-      toCurrency,
-      addToCart,
-      selectNextHead,
-      selectPrviouseHead,
-      selectNextLeftArm,
-      selectPrviouseLeftArm,
-      selectNextTorso,
-      selectPrviouseTorso,
-      selectNextRightArm,
-      selectPrviouseRightArm,
-      selectNextBase,
-      selectPrviouseBase,
-    };
-  },
+const addToCart = () => {
+  const robot = selectedRobot.value;
+  const cost = robot.head.cost + robot.leftArm.cost + robot.torso.cost + robot.rightArm.cost + robot.base.cost;
+  cart.value.push({ ...robot, cost });
+  console.log(cart.value.length);
 };
+
+// #region Part Selector Methods
+const selectNextHead = () => {
+  selectedHeadIndex.value = getNextValidIndex(selectedHeadIndex.value, availableParts.heads.length);
+};
+const selectPrviouseHead = () => {
+  selectedHeadIndex.value = getPreviousValidIndex(selectedHeadIndex.value, availableParts.heads.length);
+};
+const selectNextLeftArm = () => {
+  selectedLeftArmIndex.value = getNextValidIndex(selectedLeftArmIndex.value, availableParts.arms.length);
+};
+const selectPrviouseLeftArm = () => {
+  selectedLeftArmIndex.value = getPreviousValidIndex(selectedLeftArmIndex.value, availableParts.arms.length);
+};
+const selectNextTorso = () => {
+  selectedTorsoIndex.value = getNextValidIndex(selectedTorsoIndex.value, availableParts.torsos.length);
+};
+const selectPrviouseTorso = () => {
+  selectedTorsoIndex.value = getPreviousValidIndex(selectedTorsoIndex.value, availableParts.torsos.length);
+};
+const selectNextRightArm = () => {
+  selectedRightArmIndex.value = getNextValidIndex(selectedRightArmIndex.value, availableParts.arms.length);
+};
+const selectPrviouseRightArm = () => {
+  selectedRightArmIndex.value = getPreviousValidIndex(selectedRightArmIndex.value, availableParts.arms.length);
+};
+const selectNextBase = () => {
+  selectedBaseIndex.value = getNextValidIndex(selectedBaseIndex.value, availableParts.bases.length);
+};
+const selectPrviouseBase = () => {
+  selectedBaseIndex.value = getPreviousValidIndex(selectedBaseIndex.value, availableParts.bases.length);
+};
+// #endregion
 </script>
 
 <style>
