@@ -12,18 +12,21 @@
   <main>
     <!-- <HomePage /> -->
     <RobotBuilder />
+    <!-- <ProductSearch /> -->
   </main>
 </template>
 
 <script>
 // import HomePage from './home/HomePage.vue';
 import RobotBuilder from './build/RobotBuilder.vue';
+// import ProductSearch from './search/ProductSearch.vue';
 
 export default {
   name: 'App',
   components: {
     // HomePage,
     RobotBuilder,
+    // ProductSearch,
   },
 };
 </script>
