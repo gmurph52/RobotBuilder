@@ -2,7 +2,7 @@
   <div class="content">
     <button class="add-to-cart" @click="addToCart()">Add to Cart</button>
     <div class="top-row">
-      <div :class="[saleBoarderClass, 'top', 'part']">
+      <div class="top part">
         <div class="robot-name">
           {{ selectedRobot.head.title }}
           <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
@@ -88,7 +88,7 @@ const selectedRobot = computed(() => ({
   base: availableParts.bases[selectedBaseIndex.value],
 }));
 
-const saleBoarderClass = computed(() => (selectedRobot.value.head.onSale ? 'sale-border' : ''));
+const headBorderColor = computed(() => (selectedRobot.value.head.onSale ? 'red' : '#aaa'));
 
 const addToCart = () => {
   const robot = selectedRobot.value;
@@ -139,8 +139,8 @@ const selectPrviouseBase = () => {
   border: 3px solid #aaa;
 }
 
-.sale-border {
-  border: 3px solid red;
+.top.part {
+  border: 3px solid v-bind(headBorderColor);
 }
 
 .part img {
