@@ -2,6 +2,7 @@ module.exports = {
   root: true,
   env: {
     node: true,
+    'vue/setup-complier-macros': true,
   },
   extends: [
     'plugin:vue/vue3-essential',
@@ -16,6 +17,6 @@ module.exports = {
     'linebreak-style': 0,
     'operator-linebreak': 0,
     'max-len': 'off',
-    'vue/max-len': 'off'
+    'vue/max-len': 'off',
   },
 };
