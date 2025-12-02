@@ -2,7 +2,6 @@ module.exports = {
   root: true,
   env: {
     node: true,
-    'vue/setup-complier-macros': true,
   },
   extends: [
     'plugin:vue/vue3-essential',
@@ -18,5 +17,8 @@ module.exports = {
     'operator-linebreak': 0,
     'max-len': 'off',
     'vue/max-len': 'off',
+    'vuejs-accessibility/alt-text': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'vuejs-accessibility/click-events-have-key-events': 'off'
   },
 };
