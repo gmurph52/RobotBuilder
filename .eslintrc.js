@@ -19,6 +19,10 @@ module.exports = {
     'vue/max-len': 'off',
     'vuejs-accessibility/alt-text': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
-    'vuejs-accessibility/click-events-have-key-events': 'off'
+    'vuejs-accessibility/click-events-have-key-events': 'off',
+    'prefer-destructuring': 'off',
+    'no-shadow': 'off',
+    'arrow-parens': 'off',
+    'import/no-extraneous-dependencies': 'off',
   },
 };
