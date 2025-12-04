@@ -36,34 +36,17 @@
       <PartSelector :parts="availableParts.bases" position="bottom" @partSelected="part => selectedRobot.base = part" />
     </div>
   </div>
-  <div>
-    <h1>Cart</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Robot Head</th>
-          <th>Cost</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(robot, index) in cart" :key="index">
-          <td>{{ robot.head.title }}</td>
-          <td class="cost">{{ toCurrency(robot.cost) }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 </template>
 
 <script setup>
 import { computed, ref, onMounted } from 'vue';
 import parts from '../data/parts';
-import { toCurrency } from '../shared/formatters';
 import PartSelector from './PartSelector.vue';
 import CollapsibleSection from '../shared/CollapsibleSection.vue';
+import { useCartStore } from '../stores/cartStore';
 
+const cartStore = useCartStore();
 const availableParts = parts;
-const cart = ref([]);
 
 onMounted(() => console.log('Component mounted!'));
 const selectedRobot = ref({
@@ -79,8 +62,7 @@ const headBorderColor = computed(() => (selectedRobot.value.head.onSale ? 'red' 
 const addToCart = () => {
   const robot = selectedRobot.value;
   const cost = robot.head.cost + robot.leftArm.cost + robot.torso.cost + robot.rightArm.cost + robot.base.cost;
-  cart.value.push({ ...robot, cost });
-  console.log(cart.value.length);
+  cartStore.cart.push({ ...robot, cost });
 };
 
 </script>
