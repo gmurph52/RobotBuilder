@@ -27,5 +27,7 @@ module.exports = {
     'arrow-body-style': 'off',
     'no-unused-vars': 'off',
     'import/prefer-default-export': 'off',
+    'no-return-assign': 'off',
+    'no-param-reassign': 'off',
   },
 };
