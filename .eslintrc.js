@@ -24,5 +24,6 @@ module.exports = {
     'no-shadow': 'off',
     'arrow-parens': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'arrow-body-style': 'off',
   },
 };
