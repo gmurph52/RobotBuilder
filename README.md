@@ -2,7 +2,14 @@
 
 ## Project setup
 ```
+// Client Setup
 npm install
+
+// Server Setup
+cd api-server
+npm install
+npm start
+cd ..
 ```
 
 ### Compiles and hot-reloads for development
