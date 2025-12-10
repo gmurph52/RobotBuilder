@@ -30,5 +30,6 @@ module.exports = {
     'no-return-assign': 'off',
     'no-param-reassign': 'off',
     'no-confusing-arrow': 'off',
+    'func-names': 'off',
   },
 };
