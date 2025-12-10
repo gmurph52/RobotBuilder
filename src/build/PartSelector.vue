@@ -5,12 +5,13 @@
     </router-link>
     <button @click="selectPreviousPart()" class="prev-selector"></button>
     <button @click="selectNextPart()" class="next-selector"></button>
-    <span class="sale" v-show="selectedPart.onSale">Sale!</span>
+    <span v-pin class="sale" v-show="selectedPart.onSale">Sale!</span>
   </div>
 </template>
 
 <script setup>
 import { computed, ref, onUpdated } from 'vue';
+import vPin from '../shared/pin-directive';
 
 const props = defineProps({
   parts: { type: Array, required: true },
@@ -58,9 +59,6 @@ const selectPreviousPart = () => {
 }
 
 .sale {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
   color: white;
   background-color: red;
   padding: 3px;
