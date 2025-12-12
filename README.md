@@ -21,6 +21,7 @@ npm run serve
 ```
 npm run build
 ```
+Note: To run a production build/deploy to the express server, after build is complete copy `dist` folder into `api-server` and cd into `api-server` and run `npm start`
 
 ### Lints and fixes files
 ```
